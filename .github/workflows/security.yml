@@ -1,0 +1,42 @@
+name: Security
+
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+    branches:
+      - release
+      - master
+
+jobs:
+  Build:
+    name: Security
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+
+# verificar fuente
+    - name: Checkout
+      uses: actions/checkout@v3
+
+# compilando imagenes de contenedores
+    - name: Build Images
+      run: |
+        make base
+
+# escaneando codigo estatico
+    - name: Scan Code
+      run: |
+        make snyk_code SNYK_TOKEN=${{ secrets.SNYK_TOKEN }}
+
+# compilando codigo
+    - name: Build Code
+      run: |
+        make build
+
+# escaneando dependencias de codigo
+    - name: Scan Dependencies
+      run: |
+        make snyk_test SNYK_TOKEN=${{ secrets.SNYK_TOKEN }}

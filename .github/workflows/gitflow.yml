@@ -12,31 +12,16 @@ on:
 
 jobs:
   Build:
-    name: Default
+    name: Gitflow
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 5
     steps:
 
 # verificar fuente
     - name: Checkout
       uses: actions/checkout@v3
 
-# compilando imagenes de contenedores
-    - name: Build Images
+# imprimiendo variables
+    - name: Print Envs
       run: |
-        make base
-
-# escaneando codigo estatico
-    - name: Scan Code
-      run: |
-        make snyk_code SNYK_TOKEN=${{ secrets.SNYK_TOKEN }}
-
-# compilando codigo
-    - name: Build Code
-      run: |
-        make build
-
-# escaneando dependencias de codigo
-    - name: Scan Dependencies
-      run: |
-        make snyk_test SNYK_TOKEN=${{ secrets.SNYK_TOKEN }}
+        printenv
