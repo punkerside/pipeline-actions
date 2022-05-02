@@ -10,7 +10,7 @@ jobs:
   Build:
     name: Default
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 16
     steps:
 
 # verificar fuente
