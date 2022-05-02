@@ -10,17 +10,14 @@ jobs:
   build:
     runs-on: ubuntu-latest
     timeout-minutes: 15
-  
     steps:
 
     - uses: actions/checkout@v3
+    - name: Checkout
+
     - name: creando imagenes de contenedores
       run: |
         make base
-
-    # - name: creando imagenes de contenedores
-    #   run: |
-    #     make base
 
     # - name: analizando codigo estatico
     #   run: |
