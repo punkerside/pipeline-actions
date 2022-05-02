@@ -13,6 +13,7 @@ jobs:
     - uses: actions/checkout@v3
     - name: Security Tests
       run: |
-           make snyk_code
            make base
+           make snyk_code
+           make build
            make snyk_test
