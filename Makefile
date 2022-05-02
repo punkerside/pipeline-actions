@@ -14,10 +14,14 @@ base:
 	@docker build --build-arg IMAGE=${PROJECT}-${ENV}-${SERVICE}:base -t ${PROJECT}-${ENV}-${SERVICE}:build -f docker/build/Dockerfile .
 	@docker build -t ${PROJECT}-${ENV}-${SERVICE}:snyk -f docker/snyk/Dockerfile .
 
+snyk_code: passwd_file
+	@docker run --rm -u "${DOCKER_UID}":"${DOCKER_GID}" -v ${PWD}/passwd:/etc/passwd:ro -v "${PWD}"/app:/app ${PROJECT}-${ENV}-${SERVICE}:snyk auth ${SNYK_TOKEN}
+	@docker run --rm -u "${DOCKER_UID}":"${DOCKER_GID}" -v ${PWD}/passwd:/etc/passwd:ro -v "${PWD}"/app:/app ${PROJECT}-${ENV}-${SERVICE}:snyk code test
+
 build: passwd_file
 	@docker run --rm -u "${DOCKER_UID}":"${DOCKER_GID}" -v "${PWD}"/passwd:/etc/passwd:ro -v "${PWD}"/app:/app ${PROJECT}-${ENV}-${SERVICE}:build
 
-snyk: passwd_file
+snyk_test: build
 	@docker run --rm -u "${DOCKER_UID}":"${DOCKER_GID}" -v ${PWD}/passwd:/etc/passwd:ro -v "${PWD}"/app:/app ${PROJECT}-${ENV}-${SERVICE}:snyk auth ${SNYK_TOKEN}
-	@docker run --rm -u "${DOCKER_UID}":"${DOCKER_GID}" -v ${PWD}/passwd:/etc/passwd:ro -v "${PWD}"/app:/app ${PROJECT}-${ENV}-${SERVICE}:snyk code test
+#	@docker run --rm -u "${DOCKER_UID}":"${DOCKER_GID}" -v ${PWD}/passwd:/etc/passwd:ro -v "${PWD}"/app:/app ${PROJECT}-${ENV}-${SERVICE}:snyk monitor
 	@docker run --rm -u "${DOCKER_UID}":"${DOCKER_GID}" -v ${PWD}/passwd:/etc/passwd:ro -v "${PWD}"/app:/app ${PROJECT}-${ENV}-${SERVICE}:snyk test
