@@ -2,6 +2,10 @@ name: Gitflow
 
 on:
   pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
     branches:
       - release
       - master
@@ -10,7 +14,7 @@ jobs:
   Build:
     name: Default
     runs-on: ubuntu-latest
-    timeout-minutes: 16
+    timeout-minutes: 15
     steps:
 
 # verificar fuente
