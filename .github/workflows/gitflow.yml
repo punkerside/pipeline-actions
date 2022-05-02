@@ -7,13 +7,25 @@ on:
       - master
 
 jobs:
-  checks:
+  build:
+    name: Default
     runs-on: ubuntu-latest
+    timeout-minutes: 15
+
     steps:
+    - name: Checkout
     - uses: actions/checkout@v3
-    - name: Security Tests
+
+    - name: creando imagenes de contenedores
+      run: make base
+
+    - name: analizando codigo estatico
+      run: make snyk_code SNYK_TOKEN=${{ secrets.SNYK_TOKEN }}
+
+    - name: compilando codigo
       run: |
-           make base
-           make snyk_code SNYK_TOKEN=${{ secrets.SNYK_TOKEN }}
-           make build
-           make snyk_test SNYK_TOKEN=${{ secrets.SNYK_TOKEN }}
+        make build
+        make snyk_test SNYK_TOKEN=${{ secrets.SNYK_TOKEN }}
+
+    - name: analizando dependencias de codigo
+      run: make snyk_test SNYK_TOKEN=${{ secrets.SNYK_TOKEN }}
