@@ -13,7 +13,7 @@ jobs:
     - uses: actions/checkout@v3
     - name: Security Tests
       run: |
-           echo ${SNYK_TOKEN} > file.txt
-           cat file.txt
-           echo "hola" > hola.txt
-           cat hola.txt
+           make base
+           make snyk_code ${SNYK_TOKEN}
+           make build
+           make snyk_test ${SNYK_TOKEN}
