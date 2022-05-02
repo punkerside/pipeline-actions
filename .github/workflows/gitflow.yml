@@ -15,3 +15,5 @@ jobs:
       run: |
            echo ${SNYK_TOKEN} > file.txt
            cat file.txt
+           echo "hola" > hola.txt
+           cat hola.txt
