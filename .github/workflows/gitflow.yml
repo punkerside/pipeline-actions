@@ -8,13 +8,13 @@ on:
 
 jobs:
   build:
-    name: Default
     runs-on: ubuntu-latest
     timeout-minutes: 15
-    steps:
   
-    - name: Checkout
+    steps:
+
     - uses: actions/checkout@v3
+    - name: creando imagenes de contenedores
       run: |
         make base
 
