@@ -7,10 +7,12 @@ on:
       - master
 
 jobs:
-  build:
+  checks:
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v3
-    - name: Build the Docker image
-      run: make base
+    - name: Security Tests
+      run: |
+           make snyk_code
+           make base
+           make snyk_test
