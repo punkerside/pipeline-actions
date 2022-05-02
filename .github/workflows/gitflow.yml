@@ -7,17 +7,33 @@ on:
       - master
 
 jobs:
+  
   build:
+    name: Default
     runs-on: ubuntu-latest
     timeout-minutes: 15
+
     steps:
 
-    - uses: actions/checkout@v3
     - name: Checkout
+      uses: actions/checkout@v3
 
-    - name: creando imagenes de contenedores
+    - name: build images
       run: |
         make base
+
+# jobs:
+#   build:
+#     runs-on: ubuntu-latest
+#     timeout-minutes: 15
+#     steps:
+
+#     - uses: actions/checkout@v3
+#     - name: Checkout
+
+#     - name: creando imagenes de contenedores
+#       run: |
+#         make base
 
     # - name: analizando codigo estatico
     #   run: |
