@@ -1,6 +1,9 @@
 name: Gitflow
 
 on:
+  label:
+    types:
+      - created
   pull_request:
     branches:
       - release
