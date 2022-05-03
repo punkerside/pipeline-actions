@@ -25,9 +25,9 @@ jobs:
       uses: actions/checkout@v3
 
 # imprimiendo variables
-    - name: Print Envs
+    - name: Validating Branches
       run: |
-        printenv
+        ./.github/workflows/validate.sh ${GITHUB_HEAD_REF} ${GITHUB_BASE_REF}
 
 ### security ###
 ################
